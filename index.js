@@ -4,8 +4,8 @@ const app = express();
 const port = process.env.PORT;
 
 const database = require("./config/database");
-database.connect();
 const mongoose = require("mongoose");
+database.connect();
 const routeClient = require("./routes/client/index.route");
 
 app.set("views", "./views");
