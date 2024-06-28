@@ -7,12 +7,14 @@ const database = require("./config/database");
 const mongoose = require("mongoose");
 database.connect();
 const routeClient = require("./routes/client/index.route");
+const routeAdmin = require("./routes/admin/index.route");
 
 app.set("views", "./views");
 app.set("view engine", "pug");
 app.use(express.static("public"));
 
 routeClient.index(app);
+routeAdmin.index(app);
 
 app.listen(port, () => {
   console.log(`App listen on port ${port}`);
