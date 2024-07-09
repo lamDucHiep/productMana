@@ -18,6 +18,25 @@ if (listButtonStatus.length > 0) {
   const buttonCurrent = document.querySelector(
     `[btn-status="${statusCurrent}"]`
   );
-  buttonCurrent.classList.add("active");
+  if (buttonCurrent) {
+    buttonCurrent.classList.add("active");
+  }
 }
 //end button status
+
+//Form search
+const formSearch = document.querySelector("[form-search]");
+if (formSearch) {
+  formSearch.addEventListener("submit", (event) => {
+    event.preventDefault();
+    console.log("Runned");
+    const keyword = event.target.elements.keyword.value;
+    let url = new URL(window.location.href);
+    if (keyword) {
+      url.searchParams.set("keyword", keyword);
+    } else {
+      url.searchParams.delete("keyword");
+    }
+    window.location.href = url;
+  });
+}
