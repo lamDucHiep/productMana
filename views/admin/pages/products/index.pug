@@ -1,4 +1,7 @@
 extends ../../layouts/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+
 block main
   h1(class="mb-4") Quản lý sản phẩm
   .card.mb-3
@@ -6,33 +9,9 @@ block main
     .card-body
       .row
         .col-6
-          button(
-            class="btn btn-sm ml-1 btn-outline-success"
-            btn-status=""
-          ) Tất cả
-          button(
-            class="btn btn-sm ml-1 btn-outline-success"
-            btn-status="active"
-          ) Hoạt động
-          button(
-            class="btn btn-sm ml-1 btn-outline-success"
-            btn-status="inactive"
-          ) Dừng hoạt động
+          +filter-status(filterStatus)
         .col-6
-          form(form-search="")
-            .input-group
-              input(
-                type="text"
-                placeholder="Nhập từ khóa"
-                name="keyword"
-                class="form-control"
-                value=keyword
-              )
-              .input-group-append
-                button(
-                  class="btn btn-success"
-                  type="submit"
-                ) Tìm
+          +search(keyword)
 
 
   .card.mb-3
