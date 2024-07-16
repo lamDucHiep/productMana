@@ -1,4 +1,5 @@
-const Product = require("../../models/products.model");
+const Product = require("../../models/products.model.js");
+const paginationHelper = require("../../helpers/pagination.helper.js");
 
 // [GET] /admin/products/
 module.exports.index = async (req, res) => {
@@ -19,11 +20,9 @@ module.exports.index = async (req, res) => {
       value: "inactive",
     },
   ];
-
   if (req.query.status) {
     find.status = req.query.status;
   }
-
   // Tìm kiếm
   let keyword = "";
   if (req.query.keyword) {
@@ -33,14 +32,19 @@ module.exports.index = async (req, res) => {
   }
   // Hết Tìm kiếm
 
-  const products = await Product.find(find);
+  // Phân trang
+  const pagination = await paginationHelper(req, find);
+  // Hết Phân trang
 
+  const products = await Product.find(find)
+    .limit(pagination.limitItems)
+    .skip(pagination.skip);
   // console.log(products);
-
   res.render("admin/pages/products/index", {
     pageTitle: "Quản lý sản phẩm",
     products: products,
     keyword: keyword,
     filterStatus: filterStatus,
+    pagination: pagination,
   });
 };
